@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h1>Peek-a-Vue</h1>
+    <h1>Bird's Eye Vue</h1>
     <section class="board">
       <Card
         v-for="(card, index) in cardList"

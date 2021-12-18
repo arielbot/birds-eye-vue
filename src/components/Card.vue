@@ -1,20 +1,21 @@
-
 <script>
 export default {
-  
+  props: {
+    value: {
+      type: Number,
+      required: true
+    }
+  }
 }
 </script>
+
 <template>
   <div class="card">
-    <div class="card-face is-front">
-      font
-    </div>
-    <div class="card-face is-back">
-      back
-    </div>
+    {{ value }}
   </div>
 </template>
-<style scoped>
+
+<style>
   .card {
     border: 5px solid gray;
     position: relative;

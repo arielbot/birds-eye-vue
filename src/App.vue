@@ -1,17 +1,21 @@
 <template>
   <div class="container">
-    <h1 id="app">Bird's Eye Vue</h1>
-    <section class="main-board">
-     <Card
-      v-for="(card, index) in cardList"
-      :key="`card-${index}`"
-      :value="card"
-    />
+    <h1>Peek-a-Vue</h1>
+    <section class="board">
+      <Card
+        v-for="(card, index) in cardList"
+        :key="`card-${index}`"
+        :value="card.value"
+        :visible="card.visible"
+        :position="card.position"
+        @select-card="flipCard"
+      />
     </section>
   </div>
 </template>
 
 <script>
+import { ref } from 'vue'
 import Card from './components/Card'
 export default {
   name: 'App',
@@ -19,15 +23,22 @@ export default {
     Card
   },
   setup() {
-    const cardList = []
+    const cardList = ref([])
     for (let i = 0; i < 16; i++) {
-      cardList.push(i)
+      cardList.value.push({
+        value: i,
+        visible: false,
+        position: i
+      })
+    }
+    const flipCard = payload => {
+      cardList.value[payload.position].visible = true
     }
     return {
-      cardList
+      cardList,
+      flipCard
     }
   }
-
 }
 </script>
 
@@ -40,7 +51,7 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
 }
-.main-board {
+.board {
   display: grid;
   grid-template-columns: 100px 100px 100px 100px;
   grid-template-rows: 100px 100px 100px 100px;

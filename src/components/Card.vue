@@ -1,35 +1,58 @@
 <script>
 export default {
   props: {
+    position: {
+      type: Number,
+      required: true
+    },
     value: {
       type: Number,
       required: true
+    },
+    visible: {
+      type: Boolean,
+      default: false
+    }
+  },
+  setup(props, context) {
+    const selectCard = () => {
+      context.emit('select-card', {
+        position: props.position
+      })
+    }
+    return {
+      selectCard
     }
   }
 }
 </script>
 
 <template>
-  <div class="card">
-    {{ value }}
+  <div class="card" @click="selectCard">
+    <div v-if="visible" class="card-face front">
+      {{ value }}
+    </div>
+    <div v-else class="card-face back">
+      Back
+    </div>
   </div>
 </template>
 
 <style>
-  .card {
-    border: 5px solid gray;
-    position: relative;
-  }
-  .card-face {
-    width: 100%;
-    height: 100%;
-    color: white;
-    position: absolute;
-  }
-  .card-face.is-front {
-    background-color: red;
-  }
-  .card-face.is-back {
-    background-color: blue;
-  }
+.card {
+  border: 5px solid #ccc;
+  position: relative;
+}
+.card-face {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  color: white;
+}
+.card-face.front {
+  background-color: red;
+}
+.card-face.back {
+  background-color: blue;
+}
 </style>

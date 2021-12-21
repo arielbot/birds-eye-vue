@@ -13,12 +13,11 @@
       />
     </section>
     <h2>{{ status }}</h2>
-    
     <div class="grid-container">
-      <button class="shuffle" @click="shuffleCards" role="button">Shuffle Cards</button>
+      <!--/* <button class="shuffle" @click="shuffleCards" role="button">Shuffle Cards</button> */-->
       <button class="restart" @click="restartGame" role="button">Restart Game</button>
     </div>
-
+    <Footer />
   </div>
 </template>
 
@@ -26,10 +25,12 @@
 import _ from 'lodash' 
 import { computed, ref, watch } from 'vue'
 import Card from './components/Card'
+import Footer from './components/Footer'
 export default {
   name: 'App',
   components: {
-    Card
+    Card,
+    Footer
   },
   setup() {
     const cardList = ref([])
@@ -69,7 +70,7 @@ export default {
     }
 
     // create matching card pair
-    const cardItems = [1, 2, 3, 4, 5, 6, 7, 8]
+    const cardItems = ['cardinal', 'chicken', 'crane', 'dove', 'falcon', 'kiwi', 'penguin', 'sparrow']
     
     cardItems.forEach(item => {
       cardList.value.push({
@@ -124,7 +125,7 @@ export default {
           setTimeout(() => {
             cardList.value[cardFirst.position].visible = false
             cardList.value[cardSecond.position].visible = false
-          }, 2000)
+          }, 1000)
         }
 
         userSelection.value.length = 0
@@ -144,8 +145,9 @@ export default {
 </script>
 
 <style>
+@import url('https://fonts.googleapis.com/css?family=Droid+Serif|Roboto:300');
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'Roboto', Sans-Serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
@@ -153,12 +155,17 @@ export default {
   margin-top: 60px;
 }
 
+.container {
+  position: relative;
+  min-height: 90vh;
+}
+
 .board {
   display: grid;
-  grid-template-columns: 100px 100px 100px 100px;
-  grid-template-rows: 100px 100px 100px 100px;
-  grid-column-gap: 30px;
-  grid-row-gap: 30px;
+  grid-template-columns: repeat(4, 100px);
+  grid-template-rows: repeat(4, 100px);
+  grid-column-gap: 20px;
+  grid-row-gap: 20px;
   justify-content: center;
 }
 
@@ -172,6 +179,7 @@ export default {
 }
 
 button {
+  font-family: 'Roboto', Sans-Serif;
   align-items: center;
   border: 2px solid #111;
   border-radius: 8px;
@@ -179,7 +187,6 @@ button {
   color: #111;
   cursor: pointer;
   display: flex;
-  font-family: Inter,sans-serif;
   font-size: 16px;
   height: 48px;
   justify-content: center;

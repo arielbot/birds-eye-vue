@@ -243,4 +243,12 @@ button:hover {
     padding: 0 40px;
   }
 }
+@media screen and (max-width: 500px) {
+  .board {
+    grid-template-columns: repeat(4, 70px);
+    grid-template-rows: repeat(4, 70px);
+    grid-column-gap: 10px;
+    grid-row-gap: 10px;
+  }
+}
 </style>

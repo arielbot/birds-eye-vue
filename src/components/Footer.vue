@@ -1,6 +1,6 @@
 <template>
   <footer>
-    <div>Built using Vue 3</div>
+    <div>Built using Vue 3 and Netlify</div>
     <div class="legal">
       Bird icons via: <a target="_blank" href="https://icons8.com">Icons8</a>
     </div>

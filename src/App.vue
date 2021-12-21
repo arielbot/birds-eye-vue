@@ -5,6 +5,7 @@
       <Card
         v-for="(card, index) in cardList"
         :key="`card-${index}`"
+        :matched="card.matched"
         :value="card.value"
         :visible="card.visible"
         :position="card.position"
@@ -32,7 +33,8 @@ export default {
       cardList.value.push({
         value: i,
         visible: false,
-        position: i
+        position: i,
+        matched: false
       })
     }
     const flipCard = payload => {
@@ -53,6 +55,8 @@ export default {
         // check to see if cards match
         if(cardFirst.faceValue === cardSecond.faceValue){
           status.value = "It's a match!"
+          cardList.value[cardFirst.position].matched = true
+          cardList.value[cardSecond.position].matched = true
         } else {
           status.value = "Sorry, try again"
           

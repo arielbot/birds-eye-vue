@@ -1,20 +1,20 @@
 <template>
   <div class="container">
     <h1>Bird's Eye Vue</h1>
-    <section class="board">
+    <transition-group tag="section" class="board" name="shuffle-effect">
       <Card
-        v-for="(card, index) in cardList"
-        :key="`card-${index}`"
+        v-for="card in cardList"
+        :key="`${card.value}-${card.variant}`"
         :matched="card.matched"
         :value="card.value"
         :visible="card.visible"
         :position="card.position"
         @select-card="flipCard"
       />
-    </section>
+    </transition-group>
     <h2>{{ status }}</h2>
     <div class="grid-container">
-      <!--/* <button class="shuffle" @click="shuffleCards" role="button">Shuffle Cards</button> */-->
+      <button class="confetti" @click="fireConfetti" role="button">I Wanna Celebrate</button>
       <button class="restart" @click="restartGame" role="button">Restart Game</button>
     </div>
     <Footer />
@@ -24,6 +24,7 @@
 <script>
 import _ from 'lodash' 
 import { computed, ref, watch } from 'vue'
+import { celebrateMode } from './utilities/confetti'
 import Card from './components/Card'
 import Footer from './components/Footer'
 export default {
@@ -52,12 +53,8 @@ export default {
       return remainingCards / 2
     })
 
-    const shuffleCards = () => {
-      cardList.value = _.shuffle(cardList.value)
-    }
-
     const restartGame = () => {
-      shuffleCards()
+      cardList.value = _.shuffle(cardList.value)
 
       cardList.value = cardList.value.map((card, index) => {
         return {
@@ -67,6 +64,11 @@ export default {
           visible: false
         }
       })
+    }
+
+    // just give me the confetti
+    const fireConfetti = () => {
+      celebrateMode()
     }
 
     // create matching card pair
@@ -84,12 +86,14 @@ export default {
     cardItems.forEach(item => {
       cardList.value.push({
         value: item,
+        variant: 1,
         visible: false,
         position: null,
         matched: false
       })
       cardList.value.push({
         value: item,
+        variant: 2,
         visible: false,
         position: null,
         matched: false
@@ -123,6 +127,12 @@ export default {
       cardList.value[payload.position].visible = true
     } */
 
+    watch(pairs, currentValue => {
+      if(currentValue === 0) {
+        celebrateMode()
+      }
+    })
+
     watch(userSelection, currentValue => {
       if (currentValue.length == 2){
         const cardFirst = currentValue[0]
@@ -152,7 +162,7 @@ export default {
       flipCard,
       userSelection,
       status,
-      shuffleCards,
+      fireConfetti,
       restartGame
     }
   }
@@ -217,7 +227,7 @@ button {
   margin: 0 auto;
 }
 
-button.shuffle {
+button.confetti {
   background-color: #BBD4ED;
 }
 
@@ -246,6 +256,10 @@ button:hover:after {
 
 button:hover {
   outline: 0;
+}
+
+.shuffle-effect-move {
+  transition: transform 0.8s ease-in;
 }
 
 @media (min-width: 768px) {

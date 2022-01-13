@@ -185,6 +185,10 @@ export default {
   margin-top: 60px;
 }
 
+main {
+  min-height: 750px;
+}
+
 .container {
   position: relative;
   min-height: 90vh;
@@ -281,6 +285,10 @@ button:hover {
 
 }
 @media screen and (max-width: 500px) {
+
+  main {
+    min-height: unset;
+  }
 
   .board {
     grid-template-columns: repeat(4, 70px);

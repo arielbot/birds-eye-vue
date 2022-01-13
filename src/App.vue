@@ -53,7 +53,7 @@ export default {
     })
 
     const shuffleCards = () => {
-      cardList.value = _.shuffle(cardList.value);
+      cardList.value = _.shuffle(cardList.value)
     }
 
     const restartGame = () => {
@@ -70,7 +70,16 @@ export default {
     }
 
     // create matching card pair
-    const cardItems = ['cardinal', 'chicken', 'crane', 'dove', 'falcon', 'kiwi', 'penguin', 'sparrow']
+    const cardItems = [
+      'cardinal',
+      'chicken',
+      'crane',
+      'dove',
+      'falcon',
+      'kiwi',
+      'penguin',
+      'sparrow'
+      ]
     
     cardItems.forEach(item => {
       cardList.value.push({
@@ -107,6 +116,12 @@ export default {
         userSelection.value[0] = payload
       }
     }
+
+    /* TODO randomly pick a card
+    const randomCard = payload => {
+      cardList.value = _.sample(cardList.value)
+      cardList.value[payload.position].visible = true
+    } */
 
     watch(userSelection, currentValue => {
       if (currentValue.length == 2){
@@ -229,26 +244,25 @@ button:hover:after {
   transform: translate(0, 0);
 }
 
-button:active {
-  background-color: #ffdeda;
-  outline: 0;
-}
-
 button:hover {
   outline: 0;
 }
 
 @media (min-width: 768px) {
+
   button {
     padding: 0 40px;
   }
+
 }
 @media screen and (max-width: 500px) {
+
   .board {
     grid-template-columns: repeat(4, 70px);
     grid-template-rows: repeat(4, 70px);
     grid-column-gap: 10px;
     grid-row-gap: 10px;
   }
+
 }
 </style>

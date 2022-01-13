@@ -1,4 +1,6 @@
 <script>
+import { computed } from 'vue'
+
 export default {
   props: {
     matched: {
@@ -19,6 +21,11 @@ export default {
     }
   },
   setup(props, context) {
+    const flipped = computed(() => {
+      if(props.visible) {
+        return 'topside'
+      }
+    })
     const selectCard = () => {
       context.emit('select-card', {
         position: props.position,
@@ -26,6 +33,7 @@ export default {
       })
     }
     return {
+      flipped,
       selectCard
     }
   }
@@ -33,12 +41,12 @@ export default {
 </script>
 
 <template>
-  <div class="card" @click="selectCard">
+  <div class="card" :class="flipped" @click="selectCard">
     <div v-if="visible" class="card-face front">
       <img :src="`/images/${value}.png`" :alt="value" class="birds-the-word" />
       <img v-if="matched" class="correct-match" src="images/match.svg" alt="correct match" />
     </div>
-    <div v-else class="card-face back">
+    <div class="card-face back">
     </div>
   </div>
 </template>
@@ -46,6 +54,11 @@ export default {
 <style>
 .card {
   position: relative;
+  transition: 0.5s transform ease-in;
+  transform-style: preserve-3d;
+}
+.card.topside {
+  transform: rotateY(180deg);
 }
 .birds-the-word {
   width: 70px;
@@ -68,10 +81,12 @@ export default {
   color: white;
   border: 2px solid black;
   border-radius: 4px;
+  backface-visibility: hidden;
 }
 .card-face.front {
   background-color: #d8f2ff;
   background-image: url("data:image/svg+xml,%3Csvg width='12' height='16' viewBox='0 0 12 16' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M4 .99C4 .445 4.444 0 5 0c.552 0 1 .45 1 .99v4.02C6 5.555 5.556 6 5 6c-.552 0-1-.45-1-.99V.99zm6 8c0-.546.444-.99 1-.99.552 0 1 .45 1 .99v4.02c0 .546-.444.99-1 .99-.552 0-1-.45-1-.99V8.99z' fill='%2300bdfe' fill-opacity='0.33' fill-rule='evenodd'/%3E%3C/svg%3E");
+  transform: rotateY(180deg);
 }
 .card-face.back {
   background-color: #b8cdc6;

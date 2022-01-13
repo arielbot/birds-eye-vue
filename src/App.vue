@@ -19,7 +19,7 @@
       <h3>{{ status }}</h3>
       <div class="grid-container">
         <button class="confetti" @click="fireConfetti" role="button">I Wanna Celebrate</button>
-        <button class="restart" @click="restartGame" role="button">Restart Game</button>
+        <button class="restart" ref="Btn" @click="restartGame" role="button">Restart Game</button>
       </div>
     </main>
     <Footer />
@@ -37,6 +37,10 @@ export default {
   components: {
     Card,
     Footer
+  },
+  // trigger shuffle onload
+  mounted () {
+    this.$refs.Btn.click()
   },
   setup() {
     const cardList = ref([])

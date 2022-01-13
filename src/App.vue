@@ -1,22 +1,27 @@
 <template>
   <div class="container">
-    <h1>Bird's Eye Vue</h1>
-    <transition-group tag="section" class="board" name="shuffle-effect">
-      <Card
-        v-for="card in cardList"
-        :key="`${card.value}-${card.variant}`"
-        :matched="card.matched"
-        :value="card.value"
-        :visible="card.visible"
-        :position="card.position"
-        @select-card="flipCard"
-      />
-    </transition-group>
-    <h2>{{ status }}</h2>
-    <div class="grid-container">
-      <button class="confetti" @click="fireConfetti" role="button">I Wanna Celebrate</button>
-      <button class="restart" @click="restartGame" role="button">Restart Game</button>
-    </div>
+    <main>
+      <h1>Bird's Eye Vue</h1>
+      <section>
+        <h2>Pick a bird. Any bird.</h2>
+      </section>
+      <transition-group tag="section" class="board" name="shuffle-effect">
+        <Card
+          v-for="card in cardList"
+          :key="`${card.value}-${card.variant}`"
+          :matched="card.matched"
+          :value="card.value"
+          :visible="card.visible"
+          :position="card.position"
+          @select-card="flipCard"
+        />
+      </transition-group>
+      <h3>{{ status }}</h3>
+      <div class="grid-container">
+        <button class="confetti" @click="fireConfetti" role="button">I Wanna Celebrate</button>
+        <button class="restart" @click="restartGame" role="button">Restart Game</button>
+      </div>
+    </main>
     <Footer />
   </div>
 </template>
@@ -203,6 +208,12 @@ export default {
   justify-content: center;
 }
 
+h2 {
+  font-size: 20px;
+  margin-bottom: 30px;
+  color: #405B72;
+}
+
 button {
   font-family: 'Roboto', Sans-Serif;
   align-items: center;
@@ -228,7 +239,7 @@ button {
 }
 
 button.confetti {
-  background-color: #BBD4ED;
+  background-color: #DFEAF6;
 }
 
 button.restart {
